@@ -2,7 +2,7 @@
   "models": [
     {
       "id": "cifar10-32x32",
-      "name": "CIFAR-10 32×32 unconditional",
+      "name": "car unconditional",
       "url": "models/cifar10 test 32 32.onnx",
       "C": 3,
       "H": 32,
@@ -15,7 +15,7 @@
     },
     {
       "id": "cliff",
-      "name": "Cliff genration",
+      "name": "Cliff genrator",
       "url": "models/peckup.onnx",
       "C": 3,
       "H": 32,
@@ -24,11 +24,20 @@
     },
     {
       "id": "lawmover",
-      "name": "Lawnmower genration",
+      "name": "Lawnmower genrator",
       "url": "models/lawnmover.onnx",
       "C": 3,
       "H": 32,
       "W": 32,
+      "condDim": 1
+    },
+    {
+      "id": "deltarune",
+      "name": "Deltarune genrator",
+      "url": "models/delta.onnx",
+      "C": 3,
+      "H": 64,
+      "W": 64,
       "condDim": 1
     }
   ]
