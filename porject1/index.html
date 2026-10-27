@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Flow Matching ONNX — Browser Inference</title>
+<title>Flow Matching ONNX Browser Inference</title>
 <style>
   :root {
     --bg: #1a1a1a; --panel: #242424; --border: #3a3a3a;
@@ -74,10 +74,10 @@
 <body>
 <div class="container">
 
-  <h1>Flow Matching → ONNX → Browser</h1>
+  <h1>Flow Matching to ONNX to Browser</h1>
   <div class="subtitle">
-    Velocity UNet exported from <code>flow_api.py</code>, ODE integrated in JavaScript.
-    Unconditional generation (<code>cond = 0</code>).
+    Velocity UNet exported from flow_api.py, ODE integrated in JavaScript.
+    Unconditional generation (cond = 0).
   </div>
 
   <!-- Model -->
@@ -132,20 +132,17 @@
 <script>
 // ============================================================
 // ORT setup
-// ============================================================
 ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.1/dist/';
 ort.env.wasm.numThreads = 1;
 
 // ============================================================
 // State
-// ============================================================
 let session = null;
 let io = null;               // { xName, tName, condName, outName, C, H, W, condDim }
 let cancelRequested = false;
 
 // ============================================================
 // Helpers
-// ============================================================
 function setStatus(msg, active = false) {
   const el = document.getElementById('status');
   el.textContent = msg;
@@ -184,8 +181,7 @@ function setProgress(pct) {
 }
 
 // ============================================================
-// 1) Load models.json and populate the dropdown
-// ============================================================
+//  Load models.json and populate the dropdown
 async function loadManifest() {
   const sel = document.getElementById('modelSelect');
   try {
@@ -216,15 +212,14 @@ async function loadManifest() {
 }
 
 // ============================================================
-// 2) Fetch a model with a progress bar
-// ============================================================
+//  Fetch a model with a progress bar
 async function fetchWithProgress(url) {
   const resp = await fetch(url);
   if (!resp.ok) throw new Error(`HTTP ${resp.status} for ${url}`);
 
   const total = parseInt(resp.headers.get('content-length') || '0', 10);
   if (!resp.body || total === 0) {
-    // Fallback: no streaming available or length unknown
+    // no streaming available or length unknown
     return await resp.arrayBuffer();
   }
 
@@ -246,7 +241,6 @@ async function fetchWithProgress(url) {
 
 // ============================================================
 // 3) Load a model given a descriptor
-// ============================================================
 async function loadModelFromDescriptor(desc, sourceLabel) {
   document.getElementById('generateBtn').disabled = true;
   session = null;
@@ -269,7 +263,7 @@ async function loadModelFromDescriptor(desc, sourceLabel) {
       executionProviders: ['wasm'],
     });
 
-    // Prefer values from the manifest; fall back to runtime names / defaults.
+    // values from the manifest; fall back to runtime names / defaults.
     const inNames = (session.inputNames && session.inputNames.length)
       ? session.inputNames : ['x', 't', 'cond'];
     const outName = (session.outputNames && session.outputNames[0])
@@ -304,8 +298,7 @@ async function loadModelFromDescriptor(desc, sourceLabel) {
 }
 
 // ============================================================
-// 4) Wire up UI
-// ============================================================
+//  Wire up UI
 document.getElementById('loadBtn').addEventListener('click', () => {
   const sel = document.getElementById('modelSelect');
   const opt = sel.selectedOptions[0];
@@ -321,7 +314,7 @@ document.getElementById('modelFile').addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (!file) return;
 
-  // Use the currently selected model's shape as a template, or ask the user.
+  // selected model's shape as a template, or ask the user.
   const sel = document.getElementById('modelSelect');
   const opt = sel && sel.selectedOptions[0];
   let template = opt && opt._model ? { ...opt._model } : null;
@@ -340,8 +333,7 @@ document.getElementById('modelFile').addEventListener('change', async (e) => {
 });
 
 // ============================================================
-// 5) Inference: one UNet forward pass
-// ============================================================
+//  Inference: one UNet forward pass
 async function predictVelocity(x, tVal, cond, batch) {
   const { xName, tName, condName, outName, C, H, W, condDim } = io;
   const tArr = new Float32Array(batch);
@@ -357,8 +349,7 @@ async function predictVelocity(x, tVal, cond, batch) {
 }
 
 // ============================================================
-// 6) Generation loop
-// ============================================================
+//  Generation loop
 async function generate() {
   if (!session || !io) return;
 
@@ -446,8 +437,7 @@ async function generate() {
 }
 
 // ============================================================
-// 7) Rendering
-// ============================================================
+//  Rendering
 function drawBatch(x, batch, C, H, W) {
   const canvas = document.getElementById('canvas');
   const hint   = document.getElementById('emptyHint');
@@ -504,8 +494,7 @@ function drawBatch(x, batch, C, H, W) {
 }
 
 // ============================================================
-// 8) Buttons & startup
-// ============================================================
+//  Buttons & startup
 document.getElementById('generateBtn').addEventListener('click', generate);
 document.getElementById('cancelBtn').addEventListener('click', () => {
   cancelRequested = true;
