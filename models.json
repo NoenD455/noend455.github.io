@@ -1,0 +1,26 @@
+{
+  "models": [
+    {
+      "id": "cifar10-32x32",
+      "name": "CIFAR-10 32×32 unconditional",
+      "url": "models/cifar10-32x32.onnx",
+      "C": 3,
+      "H": 32,
+      "W": 32,
+      "condDim": 256,
+      "xName": "x",
+      "tName": "t",
+      "condName": "cond",
+      "outName": "velocity"
+    },
+    {
+      "id": "cliff",
+      "name": "Cliff genration",
+      "url": "models/peckup.onnx",
+      "C": 3,
+      "H": 32,
+      "W": 32,
+      "condDim": 1
+    }
+  ]
+}
