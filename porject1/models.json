@@ -24,7 +24,7 @@
     },
     {
       "id": "lawmover",
-      "name": "Lawnmover genration",
+      "name": "Lawnmower genration",
       "url": "models/lawnmover.onnx",
       "C": 3,
       "H": 32,
