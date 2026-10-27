@@ -3,7 +3,7 @@
     {
       "id": "cifar10-32x32",
       "name": "CIFAR-10 32×32 unconditional",
-      "url": "models/cifar10 32 32 test.onnx",
+      "url": "models/cifar10 test 32 32.onnx",
       "C": 3,
       "H": 32,
       "W": 32,
